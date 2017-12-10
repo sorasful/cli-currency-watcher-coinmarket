@@ -6,6 +6,8 @@ Requires python 3.6+
 ## Installation 
 
 `git clone git@github.com:sorasful/cli-currency-watcher-coinmarket.git`  
+then cd into the cloned directory  
+
 `pip install -r requirements.txt`  
 
 If you want to use it using the UNIX syntax :   
