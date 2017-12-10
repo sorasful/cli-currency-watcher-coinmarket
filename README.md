@@ -5,12 +5,22 @@ Requires python 3.6+
 
 ## Installation 
 
-`pip install -r requirements.txt`
+`git clone git@github.com:sorasful/cli-currency-watcher-coinmarket.git`  
+`pip install -r requirements.txt`  
+
+If you want to use it using the UNIX syntax :   
+
+`chmod a+x currency_watcher`
+
 
 ## Usage
 
 No argument (get Bitcoin currency)  
-`python currency_watcher.py`
+`python currency_watcher`
 
 With argument :  
-`python currency_watcher.py -c nexus`
+`python currency_watcher -c nexus`
+
+or directly using 
+
+`currency_watcher -c nexus`
