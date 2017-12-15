@@ -25,4 +25,4 @@ With argument :
 
 or directly using 
 
-`currency_watcher -c nexus`
+`./currency_watcher -c nexus`
