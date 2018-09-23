@@ -1,4 +1,6 @@
 #!/usr/bin/env python
+import re
+
 import requests
 import click
 from bs4 import BeautifulSoup
@@ -7,16 +9,21 @@ from bs4 import BeautifulSoup
 def get_currency(currency):
     base_url = f"https://coinmarketcap.com/currencies/{currency}/"
 
-    response =  requests.get(base_url).text
+    response = requests.get(base_url).text
     soup = BeautifulSoup(response, "html.parser")
 
-    usd_price = soup.find('span', id='quote_price')['data-usd']
-    btc_price = soup.find('span',  {'class': 'text-gray details-text-medium'}).text.replace('BTC', '').strip()
+    usd_price_elem = soup.find("span", id="quote_price")
+    usd_price = re.search("(\d+.?\d+)", usd_price_elem.text).group(1)
 
-    return (usd_price, btc_price)
+    btc_price = soup.select_one("span.text-gray > span").text.strip()
+
+    return {"dollars": usd_price, "btc": btc_price}
+
 
 @click.command()
-@click.option('--currency', '-c',  help='the currency you want to get info from', default="bitcoin" )
+@click.option(
+    "--currency", "-c", help="the currency you want to get info from", default="bitcoin"
+)
 def main(currency):
     """
     This is a simple tool that shows you the current value of a crypto-currency based on
@@ -28,7 +35,8 @@ def main(currency):
     2. nexus
     """
     currency_result = get_currency(currency)
-    print("USD : {}$  BTC : {}".format(currency_result[0], currency_result[1]))
+    print(f"USD : {currency_result['dollars']}$  BTC : {currency_result['btc']}")
+
 
 if __name__ == "__main__":
     main()
